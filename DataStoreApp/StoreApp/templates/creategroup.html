@@ -1,0 +1,58 @@
+{% extends 'base.html' %}{% block content%}
+<style>
+	input{
+		width:250px;
+		margin-right: 10px;
+		padding: 10px;
+		height: 25px;
+		font-size: 15px;
+	}
+	select
+	{
+		width:250px;
+		height: 25px;
+		font-size: 15px;
+	}
+</style>
+
+<div class="container">
+	<form action="creategroup" method="post" style="width:75%;margin: auto;">
+		{% csrf_token %} 
+		<div class="table table-responsive" style="margin: 100px 0px 100px 0px;">
+			<tr>
+				<td>
+					<input type="text" placeholder="Name of Group " name="group_name" id="group_name" required>
+				</td>
+
+				<td>
+					<input type="text" placeholder="Part Of which Group (if Avalible)" name="group_available" id="group_available">
+				</td>
+
+				<td>
+					<select name="subgroup_name">
+				      <option value="">Autres dépenses</option>
+				      <option value="">Coût des marchandises vendues</option>
+				      <option value="">Actifs à court terme</option>
+				      <option value="">Banque</option>
+				      <option value="">Carte de crédit</option>
+				    </select>
+				</td>
+			</tr><br>
+
+			<tr>
+				<td>
+					<button type="submit" class="btn btn-sm btn-info" style="margin-top: 20px;color: white;margin-left: 600px;"><a style="text-decoration: none;color: white;">Save</a></button>
+				</td>
+
+				<td>
+					<button type="submit" class="btn btn-sm btn-danger" style="margin-top: 20px;color: white;"><a href="#" style="text-decoration: none;color: white;">Delete</a></button>
+				</td>
+				
+			</tr>
+		</div>
+	</form>
+		
+</div>
+
+<hr>
+{% endblock %}

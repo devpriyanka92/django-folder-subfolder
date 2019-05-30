@@ -1,0 +1,139 @@
+{% extends 'base.html' %}{% load static %}
+{% block content%}
+
+<style>
+	input{
+		width:250px;
+		margin-right: 10px;
+		padding: 10px;
+		height: 30px;
+		font-size: 15px;
+		margin-bottom:20px;
+	}
+	select{
+		width:250px;
+		height: 30px;
+		font-size: 15px;
+		border-radius: 3px;
+		margin-bottom:20px;
+	}
+	button{
+		width: 255px;
+		color: white;
+	}
+	.tb{
+		width: 600px;
+		margin: auto;
+		margin-top:50px;
+	}
+	.uploaddiv {
+		position: relative;
+		overflow: hidden;
+		width: 258px;
+		padding:0px 0px 0px 30px;
+	}
+	.uploadinput {
+		  position: absolute;
+		  opacity: 0;
+		  right: 0;
+		  top: 0;
+	}
+
+</style>
+
+<div class="container">
+	<button type="button" class="btn btn-sm btn-outline-info" style="width: 150px;height: 35px;"><a href="{% url 'index' %}" style="text-decoration: none;">Company</a></button>
+
+	<form method="POST" action="{% url 'dataupload' %}" id="dataupload" name="dataupload" class="post-form" enctype="multipart/form-data" data-ajax="false">
+	{% csrf_token %}
+	<div class="table table-responsive tb">
+		
+		<tr>
+			<td>
+				<input type="text" placeholder="Select Account Software " readonly>
+			</td>
+
+			<td>
+				<select name="account_software" id="account_software" required>
+				  <option value=""></option>
+			      <option value="Autres dépenses">Autres dépenses</option>
+			      <option value="Coût des marchandises vendues">Coût des marchandises vendues</option>
+			      <option value="Actifs à court terme">Actifs à court terme</option>
+			      <option value="Banque">Banque</option>
+			      <option value="Carte de crédit">Carte de crédit</option>
+			    </select>
+			</td>
+		</tr><br>
+
+		<tr>
+			<td>
+				<input type="text" placeholder="Select Fiscal Year " readonly>
+			</td>
+
+			<td>
+				<select  name="fiscal_year" id="fiscal_year" required>
+				  <option value=""></option>
+			      <option value="2015">2015</option>
+			      <option value="2016">2016</option>
+			      <option value="2017">2017</option>
+			      <option value="2018">2018</option>
+			      <option value="2019">2019</option>
+			    </select>
+			</td>
+		</tr><br>
+
+
+		<tr>
+			<td>
+				<input type="text" placeholder="Select Month Year " readonly>
+			</td>
+
+			<td>
+				<select name="fiscal_month" id="fiscal_month" required>
+				  <option value=""></option>
+			      <option value="1">January</option>
+			      <option value="2">February</option>
+			      <option value="3">March</option>
+			      <option value="4">April</option>
+			      <option value="5">May</option>
+			    </select>
+			</td>
+		</tr><br>
+
+
+		<tr>
+			<td>
+				<input type="text" placeholder="Currency " readonly>
+			</td>
+
+			<td>
+				<select name="currency" id="currency" required>
+				  <option value=""></option>
+			      <option value="doller">doller</option>
+			      <option value="rupee">rupee</option>
+			    </select>
+			</td>
+		</tr><br>
+		<tr>
+			<td colspan="2">
+				<input type="text" placeholder="Enter Company Name " style="width: 515px;height: 30px;" name="company" id="company" required>
+			</td>
+		</tr><br>
+		<tr>
+			<td>
+				<div class="file btn btn-lg btn-secondary uploaddiv">
+					<span>Choose File</span>
+					<input class="uploadinput" type="file" name="excel_file" id="myfile" />
+				</div>
+			</td>
+
+			<td>
+				<button type="submit" class="btn btn-sm btn-info"><a style="text-decoration: none;color: white;">Upload</a></button>
+			</td>
+		</tr>
+
+		</div>
+	</form>
+</div>
+<hr style="margin-top: 50px;">
+{% endblock %}

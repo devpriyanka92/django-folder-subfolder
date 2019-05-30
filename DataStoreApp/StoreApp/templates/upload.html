@@ -1,0 +1,54 @@
+{% extends 'base.html' %}{% block content%}
+<div class="container">
+	<div class="row">
+		<form action="#" method="post" enctype="multipart/form-data" style="width: 400px;margin: auto;">
+				{% csrf_token %}
+				<table class="table">
+					<tr>
+						<td>
+							<input type="file"
+							 title="Upload excel file"
+							 name="excel_file"
+							 style="border: 1px solid black; padding: 5px;"
+							 required="required">
+				
+							<input type="submit"
+							 value="Upload"
+							 style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+						</td>
+					</tr>
+				</table>
+		</form>
+	</div>
+</div>
+<hr>
+			 
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			
+		<h3><center>Liste de comptes</center></h3>
+		<form action="#" method="post" enctype="multipart/form-data">
+			<table class="table table-striped" style="margin-bottom: 50px;">
+
+				<tbody>				
+					{% for row in excel_data %}
+					<tr>
+						{% for cell in row %}
+						
+							{% if cell != blank	 %}
+							<td>{{ cell }}</td>
+							{% endif  %}
+
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</form>
+		</div>
+		<div class="col-sm-6"></div>
+	</div>
+</div>
+
+{% endblock %}

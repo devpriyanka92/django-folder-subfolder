@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>DataStoreApp</title>
+
+    {% load static %}
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet"> -->
+    <link rel="shortcut icon" href="{% static 'images/io.jpg' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <style>
+      .a_box{
+        border: 1px solid grey;
+        padding: 10px;
+        width: 155px;
+        height: 40px;
+        text-align: center;
+        line-height:20px;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+
+          <hr><nav class="navbar navbar-expand-lg navbar-light bg-light" style="border: 1px solid grey;">
+            <a class="navbar-brand " href="{% url 'index' %}" style="margin-right:50px;"><img src="{% static 'images/data.png' %}" style="width: 120px;height: 40px;"></a>
+            <a class="navbar-brand a_box" href="{% url 'index' %}" style="margin-right:50px;">Company</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link a_box" href="#">TBD</a>
+                </li>
+                 <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle a_box" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Imports
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item a_box" href="{% url 'import_menu' %}">Imports Menu</a>
+                    <a class="dropdown-item a_box" href="#">Accounting Balance</a>
+                  </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle a_box" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Params
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item a_box" href="{% url 'function' %}">Function</a>
+                    <a class="dropdown-item a_box" href="{% url 'grouping' %}">Grouping</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link a_box" href="{% url 'index' %}">DashBoard</a>
+                </li>
+              </ul>
+             
+            </div>
+          </nav><hr>
+
+      </div>
+    {% block content%}{% endblock %}
+
+    </div>
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    
+
+</body>
+</html>

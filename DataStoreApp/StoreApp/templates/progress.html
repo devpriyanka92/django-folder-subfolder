@@ -1,0 +1,46 @@
+{% extends 'base.html' %}{% block content%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+	.prog{
+		width: 300px;
+		height: 23px;
+		margin: auto;
+		margin-top: 100px;
+	}
+	.button_box{
+		width: 300px;
+		height: 28px;
+		margin-left:390px;
+		margin-top: 10px;
+	}
+</style>
+<script>
+$(function() {
+  var progressed = 14;
+  var interval = setInterval(function() {
+      progressed += 2;
+      $("#moving-progress-bar")
+      .css("width", progressed + "%")
+      .attr("aria-valuenow", progressed)
+      .text(progressed + "%");
+      if (progressed >= 100)
+          clearInterval(interval);
+  }, 100);
+  
+});
+</script>
+
+<div class="container">
+	<form method=POST action="{% url 'list_of_file' %}">{% csrf_token %}
+	<button type="button" class="btn btn-sm btn-outline-info" style="width: 150px;height: 35px;">Company</button>
+	<div class="progress prog">
+	  <div id="moving-progress-bar" class="progress-bar bg-primary progress-bar-striped"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ></div>
+	</div>
+
+	<button type="submit" class="btn btn-sm btn-outline-info button_box"><a href="{% url 'list_of_file' %}" style="text-decoration: none;"><b>Loading In Progress </b></a></button></form>
+</div>
+<hr style="margin-top: 100px;">
+
+
+{% endblock %}
