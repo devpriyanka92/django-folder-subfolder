@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from StoreApp.models import User, Company, Chart_Of_Account, Group_subgroup, Varification_balance
+from StoreApp.models import User, Company, Chart_Of_Account, Group, Varification_balance, SubGroup
 from django.contrib import messages
 import xlrd
 from django.core.files.base import File
@@ -14,6 +14,9 @@ import calendar
 
 # read excel data
 def read_data(request):
+	# record getting from creategroup.html
+	query_results = Group.objects.all()
+	
 	if "GET" == request.method:
 		return render(request, 'upload.html', {})
 	else:
@@ -34,7 +37,7 @@ def read_data(request):
 				row_data.append(str(cell.value).replace("None", ""))
 			excel_data.append(row_data)
 
-	return render(request, 'grouping.html', {"excel_data":excel_data})
+	return render(request, 'grouping.html', {"excel_data":excel_data,"GroupData":query_results})
 	
 # data upload 
 def dataupload(request):
@@ -81,13 +84,9 @@ def group_create(request):
 
 		# Get the form data from the request.
 		group_name = request.POST.get('group_name')
-		group_available = request.POST.get('group_available')
-		subgroup_name = request.POST.get('subgroup_name')
-
-		# Create a new group with the data.
-		upload_data = Group_subgroup.objects.create(
 		
-			groupparent_id = Group_subgroup.objects.exclude(field_id=self.field_id),
+		# Create a new group with the data.
+		upload_data = Group.objects.create(
 			group_name = group_name,)
 
 		upload_data.save()
@@ -99,12 +98,6 @@ def group_create(request):
 		messages.info(request, 'Uploading error')
 
 	return render(request, 'creategroup.html')
-
-# logic for show data 
-def Data_ListOfFileUpload(request):
-    query_results = Varification_balance.objects.all()
-    return render(request, 'list_of_file.html', {"AllData":query_results})
-
 
 def upload(request):
 	return render(request, 'upload.html')
@@ -140,8 +133,10 @@ def import_menu(request):
 
 	return render(request, 'import_menu.html', {'ListAccount':List,'dateList':years, 'AllMonths':month, 'currency':currency})
 
+# logic for show data 
 def list_of_file(request):
-	return render(request, 'list_of_file.html')
+	query_results = Varification_balance.objects.all()
+	return render(request, 'list_of_file.html', {"AllData":query_results})
 
 def progress(request):
 	return render(request, 'list_of_file.html')

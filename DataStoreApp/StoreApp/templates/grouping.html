@@ -119,21 +119,13 @@ document.addEventListener("drop", function(event) {
 		</div>
 		<div class="scroll col-sm-6 box">
 
-			<div id="accordion">
-
-				<ul>				
-					<li><a href="##" id="1"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs</a></li>
-				</ul>
-
-				<ul>				
-					<li><a href="##" id="2"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs court terme</a></li>
-				</ul>
-
-				<ul>				
-					<li><a href="##" id="3"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Competes recevable</a></li>
-				</ul>
-
-
+			<div>
+ 			
+			    {% for item in GroupData %}
+			    <ul>
+			        <li><a href="##" id='row-{{ forloop.counter0}}'><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> {{ item.group_name }}</a></li>			        
+			    </ul>
+		    	{% endfor %}
 				<script type="text/javascript">
 					var id ;
 				var reply_click = function()
@@ -141,11 +133,10 @@ document.addEventListener("drop", function(event) {
 					id = this.id;
 					window.console.log(id);
 				}
-				document.getElementById('1').onclick = reply_click;
-				document.getElementById('2').onclick = reply_click;
-				document.getElementById('3').onclick = reply_click;
+				{% for item in GroupData %}
+				document.getElementById('row-{{ forloop.counter0}}').onclick = reply_click;
+				{% endfor %}
 				</script>
-
 
 			</div>
 

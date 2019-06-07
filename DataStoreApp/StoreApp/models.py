@@ -23,11 +23,17 @@ class Chart_Of_Account(models.Model):
     field_type = models.CharField(max_length=100)
     field_subtype = models.CharField(max_length=100)
 
-# create Group_subgroup
-class Group_subgroup(models.Model):
-    field_id = models.AutoField(primary_key=True)
-    groupparent_id = models.ForeignKey('self', on_delete=models.CASCADE)
+# create Group
+class Group(models.Model):
+    group_id = models.AutoField(primary_key=True)
+    # groupparent_id = models.ForeignKey('self', on_delete=models.CASCADE)
     group_name = models.CharField(max_length=100)
+
+# create subGroup
+class SubGroup(models.Model):
+    subgroup_id = models.AutoField(primary_key=True)
+    subgroup_name = models.CharField(max_length=100)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
 # create Varification_balance
 class Varification_balance(models.Model):
