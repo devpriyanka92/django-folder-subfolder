@@ -6,8 +6,13 @@ import xlrd
 from django.core.files.base import File
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.core.validators import FileExtensionValidator
+from django.db import IntegrityError
 import openpyxl
+import datetime
+import calendar
 
+# read excel data
 def read_data(request):
 	if "GET" == request.method:
 		return render(request, 'upload.html', {})
@@ -17,8 +22,11 @@ def read_data(request):
 		
 		wb = openpyxl.load_workbook(excel_file)
 
-		worksheet = wb["Liste de comptes"]
+		worksheet = wb.active 
+		# worksheet = wb["Liste de comptes"]
+
 		excel_data = list()
+		row_data = list()
 
 		for row in worksheet.iter_rows():
 			row_data = list()
@@ -28,12 +36,12 @@ def read_data(request):
 
 	return render(request, 'grouping.html', {"excel_data":excel_data})
 	
-#------------------------------------------------------------------------------
-
+# data upload 
 def dataupload(request):
 
 	if request.method == 'POST':
-	
+		# Get the form data from the request.
+
 		company = request.POST.get('company')
 		account_software = request.POST.get('account_software')
 		fiscal_year = request.POST.get('fiscal_year')
@@ -41,6 +49,7 @@ def dataupload(request):
 		currency = request.POST.get('currency')
 		upload_file = request.POST.get('myfile')
 
+		# Create a new record with the data.
 		upload_data = Varification_balance.objects.create(
 		company = company,
 		field_account = account_software,
@@ -53,49 +62,49 @@ def dataupload(request):
 		upload_version = "000",
 		upload_file = upload_file,
 		)
+		# Save logic
 		upload_data.save()
 
+		# Add save success message
 		messages.info(request, 'Data Saved')
 	else:
+		# error message
 		messages.info(request, 'Uploading error')
 
 	return render(request, 'progress.html')
 
-# -----------------------------------------------------------
 
-# def formfield_for_foreignkey(self, Group_subgroup, request, **kwargs):
-#     if Group_subgroup.groupparent_id == "groupparent_id":
-#         kwargs['queryset'] = Group_subgroup.objects.exclude(pk=self.field_id)
-#     return super(IdolAdmin, self).formfield_for_foreignkey(Group_subgroup, request, **kwargs)
-
+# logic for creating group
 def group_create(request):
 
 	if request.method == 'POST':
-	
+
+		# Get the form data from the request.
 		group_name = request.POST.get('group_name')
 		group_available = request.POST.get('group_available')
 		subgroup_name = request.POST.get('subgroup_name')
 
+		# Create a new group with the data.
 		upload_data = Group_subgroup.objects.create(
 		
-			groupparent_id = Group_subgroup.objects.exclude(pk=self.field_id),
+			groupparent_id = Group_subgroup.objects.exclude(field_id=self.field_id),
 			group_name = group_name,)
 
 		upload_data.save()
 
+		# Add save success message
 		messages.info(request, 'Data Saved')
 	else:
+		# Add error message
 		messages.info(request, 'Uploading error')
 
 	return render(request, 'creategroup.html')
 
-#-------------------------------------------------------------
-
+# logic for show data 
 def Data_ListOfFileUpload(request):
     query_results = Varification_balance.objects.all()
     return render(request, 'list_of_file.html', {"AllData":query_results})
 
-#--------------------------------------------------------------------
 
 def upload(request):
 	return render(request, 'upload.html')
@@ -113,7 +122,23 @@ def function(request):
 	return render(request, 'function.html')
 
 def import_menu(request):
-	return render(request, 'import_menu.html')
+	# list for List Select Account software
+
+	List = [ 'Acomba', 'Sage 50', 'QuickBooks Online']
+
+	# list for year
+
+	years = []
+	for year in range(2015, (datetime.datetime.now().year+1)):
+		years.append(year)
+
+	# list for month
+	month = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12}
+
+	#list for currency
+	currency = [ 'Dollar - USD', 'Euro - Euro']
+
+	return render(request, 'import_menu.html', {'ListAccount':List,'dateList':years, 'AllMonths':month, 'currency':currency})
 
 def list_of_file(request):
 	return render(request, 'list_of_file.html')

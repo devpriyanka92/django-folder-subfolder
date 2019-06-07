@@ -16,19 +16,21 @@
 	}
 </style>
 <script>
+// logic for progress bar
 $(function() {
-  var progressed = 14;
-  var interval = setInterval(function() {
+	var progressed = 14;
+	var interval = setInterval(function() {
       progressed += 2;
       $("#moving-progress-bar")
       .css("width", progressed + "%")
       .attr("aria-valuenow", progressed)
       .text(progressed + "%");
-      if (progressed >= 100)
-          clearInterval(interval);
+		if (progressed >= 100)
+		    clearInterval(interval);
+		window.location = "{% url 'list_of_file' %}";
   }, 100);
-  
 });
+
 </script>
 
 <div class="container">

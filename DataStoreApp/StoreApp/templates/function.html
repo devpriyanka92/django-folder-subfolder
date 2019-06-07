@@ -6,89 +6,63 @@
 	{
 		overflow: hidden;
 		overflow-y: scroll;
-		height:280px;
+		height:350px;
 	}
+
+	ul,a{
+		text-decoration: none;
+		list-style: none;
+	}
+	a:hover	{
+    text-decoration:none;
+   	}
+   	.box{
+   		background-color:#f7f7f7;
+   		padding: 15px 0px 0px 25px;
+   		border: 1px solid grey;
+   	}
+   	.box li{
+   		margin-left: -50px;
+   	}
 
 </style>
 
 <h3 class="text-muted" style="text-align: center;">
     <a href="" style="text-decoration:none;color: grey;">Function Creation</a>
 </h3><br>
+
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6">
-			<div class="scroll row " style="width: 75%;margin: auto;">
-	<table class="table table-striped table-bordered table-sm ">
+		<div class="scroll col-sm-6 box">
 
-	  <thead style="background-color: #aaa;">
-	    <tr>
-	      <th class="th-sm">Name
-	      </th>
-	      <th class="th-sm">Position
-	      </th>
-	      <th class="th-sm">Office
-	      </th>
-	      <th class="th-sm">Age
-	      </th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	    <tr>
-	      <td>2018</td>
-	      <td>January</td>
-	      <td>1</td>
-	      <td>12-12-2018</td>
-	    </tr>
-	   
-
-	  </tbody>
-	</table>
-</div>
+			<div id="accordion">
+				<ul>				
+					<li><a class="card-link" data-toggle="collapse" href="#collapseOne"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs</a></li>
+				
+					<ul id="collapseOne" class="collapse show" data-parent="#accordion">
+						<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#"> Gadgets<table id="table2" border="1"></table></a></li>  
+					</ul>
+				</ul>
+				<ul>				
+					<li><a class="card-link" data-toggle="collapse" href="#collapseTwo"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs court terme</a></li>
+				
+					<ul id="collapseTwo" class="collapse show" data-parent="#accordion">
+						<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#"> Gadgets<table id="table2" border="1"></table></a></li>  
+					</ul>
+				</ul>
+				<ul>				
+					<li><a class="card-link" data-toggle="collapse" href="#collapseThree"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs</a></li>
+				
+					<ul id="collapseThree" class="collapse show" data-parent="#accordion">
+						<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#"> Gadgets<table id="table2" border="1"></table></a></li>  
+					</ul>
+				</ul>
+			</div>
 		</div>
+
+
 		<div class="col-sm-6">
-			<form  style="border: 1px solid black;">
+			<form  style="border: 1px solid grey;">
 				<table class="table">
 					<tr>
 						<td colspan="2"><input type="text" name="" placeholder="Function Name " style="width: 50%;height:30px;padding: 10px;"></td>
@@ -126,5 +100,5 @@
 		</div>
 	</div>
 </div>
-<hr>
+<hr style="margin-top:30px;">
 {% endblock %}

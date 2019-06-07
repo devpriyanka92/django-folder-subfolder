@@ -27,6 +27,7 @@
 <script>
 
 document.addEventListener("dragstart", function(event) {
+	console.log("id", event.target.id)
   event.dataTransfer.setData("Text", event.target.id);
   
   document.getElementById("demo").innerHTML = "Started to drag the p element.";
@@ -65,10 +66,13 @@ document.addEventListener("drop", function(event) {
     document.getElementById("demo").style.color = "";
     event.target.style.border = "";
     var data = event.dataTransfer.getData("Text");
-    //console.log("data", document.getElementById(data))
-    var column_data = event.target.appendChild(document.getElementById(data));
+    console.log("event", data)
+    var el = document.getElementById(data)
+    var cloned_el = el.cloneNode(true);
+    var column_data = event.target.appendChild(cloned_el);
   }
 });
+
 </script>
 
 <h4 class="text-muted" style="text-align: center;">
@@ -81,11 +85,12 @@ document.addEventListener("drop", function(event) {
 		<div class="scroll col-sm-5">
 			
 		<form action="#" method="post" enctype="multipart/form-data">
-			<table class="table table-striped" style="margin-bottom: 50px;" id="table1">
+			<table class="table table-striped" style="margin-bottom: 50px;border: none;" id="table1">
 
-				<tbody class="droptarget dragtarget">				
+				<!-- print excel data in table -->
+				<tbody class=" dragtarget">				
 					{% for row in excel_data %}
-					<tr draggable="true" id="dragtarget">
+					<tr draggable="true" id= 'rowt-{{ forloop.counter0}}' >
 						<td><input type="checkbox" name="check-tab1"></td>
 						{% for cell in row %}
 						
@@ -97,6 +102,7 @@ document.addEventListener("drop", function(event) {
 					</tr>
 					{% endfor %}
 				</tbody>
+
 			</table>
 		</form>
 		</div>
@@ -113,95 +119,101 @@ document.addEventListener("drop", function(event) {
 		</div>
 		<div class="scroll col-sm-6 box">
 
-		<div id="accordion">
+			<div id="accordion">
 
-			<ul>				
-				<li><a class="card-link" data-toggle="collapse" href="#collapseOne"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs</a></li>
-			
-				<ul id="collapseOne" class="collapse show" data-parent="#accordion">
-					<li>
-						<ul>
-							<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#"> Gadgets<table id="table2" border="1"></table></a></li>  
-						</ul>
-					</li>
+				<ul>				
+					<li><a href="##" id="1"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs</a></li>
 				</ul>
-			</ul>
 
-			<ul>				
-				<li><a class="card-link" data-toggle="collapse" href="#collapseTwo"><i class="fa fa-folder" aria-hidden="true" style="color:#ecda82;"></i> Actifs court terme</a></li>
-			
-				<ul id="collapseTwo" class="collapse show" data-parent="#accordion">
-					<li>
-						<ul>
-							<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#">Gadgets</a></li>
-							<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#">Accessories</a></li>
-						</ul>
-					</li>
+				<ul>				
+					<li><a href="##" id="2"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Actifs court terme</a></li>
 				</ul>
-			</ul>
 
-			<ul>				
-				<li><a class="card-link" data-toggle="collapse" href="#collapseThree"><i class="fa fa-folder" aria-hidden="true" style="color:#ecda82;"></i> Actifs court terme</a></li>
-			
-				<ul id="collapseThree" class="collapse show" data-parent="#accordion">
-					<li>
-						<ul>
-							<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#">Gadgets</a></li>
-							<li><i class="fa fa-grip-lines" style="color: grey;"></i> <a href="#">Accessories</a></li>
-						</ul>
-					</li>
+				<ul>				
+					<li><a href="##" id="3"><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> Competes recevable</a></li>
 				</ul>
-			</ul>
 
-		</div><div class="droptarget" style="width: 500px;height: 300px;overflow: hidden;
-		overflow: scroll;"></div><p id="demo"></p>
-	</div>
-	<div class="col-sm-0.5">
+
+				<script type="text/javascript">
+					var id ;
+				var reply_click = function()
+				{
+					id = this.id;
+					window.console.log(id);
+				}
+				document.getElementById('1').onclick = reply_click;
+				document.getElementById('2').onclick = reply_click;
+				document.getElementById('3').onclick = reply_click;
+				</script>
+
+
+			</div>
+
+			<div class="droptarget" style="width: 500px;height: 300px;overflow: hidden;overflow: scroll;"></div><p id="demo"></p>
+
+		</div>
+
+
+		<div class="col-sm-0.5">
 			<div class="btn-group-vertical" style="margin:0px 0px 0px 8px;">
 				<button type="button" class="btn btn-danger" style="margin-top:5px;width:30px;height: 30px;"><i class="fa fa-caret-up" aria-hidden="true" style="margin:-8px 0px 0px -6px; font-size: 30px;"></i></button>
 
 				<button type="button" class="btn btn-danger"  style="margin-top:5px;width:30px;height: 30px;"><i class="fa fa-caret-down" aria-hidden="true" style="margin:-5px 0px 0px -6px;font-size: 30px;"></i></button>
 			</div>
 		</div>
-</div>
+	</div>
 
 <script>
-            
+let OnEvent = (doc) => {
+    return {
+        on: (event, className, callback) => {
+            doc.addEventListener('click', (event)=>{
+                if(!event.target.classList.contains(className)) return;
+                callback.call(event.target, event);
+            }, false);
+        }
+    }
+};
+
+OnEvent(document).on('click', 'btn', function (e) {
+    window.console.log(this, e);
+});
+</script>
+
+<script>
+    // logic for sending data from one table to another table after clicking on checkbox
     function tab1_To_tab2()
     {
         var table1 = document.getElementById("table1"),
-            table2 = document.getElementById("table2"),
             checkboxes = document.getElementsByName("check-tab1");
-    	console.log("Val1 = " + checkboxes.length);
-         for(var i = 0; i < checkboxes.length; i++)
+            var table2 = document.createElement("table");
+  			var tblBody = document.createElement("tbody");
+            var elem = id;
+         for(var i = 0; i< table1.rows.length; i++){
              if(checkboxes[i].checked)
                 {
-                    var newRow = table2.insertRow(table2.length),
-                        cell1 = newRow.insertCell(0),
-                        cell2 = newRow.insertCell(1),
-                        cell3 = newRow.insertCell(2),
-                        cell4 = newRow.insertCell(3);
-                        cell5 = newRow.insertCell(4),
-                        cell6 = newRow.insertCell(5),
-                        cell7 = newRow.insertCell(6),
-
-                    cell1.innerHTML = table1.rows[i].cells[0].innerHTML;
-                    cell2.innerHTML = table1.rows[i].cells[1].innerHTML;
-                    cell3.innerHTML = table1.rows[i].cells[2].innerHTML;
-                    cell4.innerHTML = table1.rows[i].cells[3].innerHTML;
-                    cell5.innerHTML = table1.rows[i].cells[4].innerHTML;
-                    cell6.innerHTML = table1.rows[i].cells[5].innerHTML;
-                    cell7.innerHTML = table1.rows[i].cells[6].innerHTML;
+                	  var newRow = table2.insertRow(table2.length);
+                	  console.log("row", table1.rows[i])
+					   for (var j = 0; j< table1.rows[i].cells.length; j++) {
+					   var 	 cell = newRow.insertCell(j);
+					   console.log("cell", table1.rows[i].cells[j])
+					   	  cell.innerHTML = table1.rows[i].cells[j].innerHTML;
+					   }  
 
                     checkboxes[i].checked = false;
                    
-                }
-                
+                }       
+             }  
+			var currentDiv = document.getElementById(elem); 
+			currentDiv.appendChild(table2);
     }
 
+    // logic for delete row after clicking on checkbox
     function deleteRow()
     {
+        var table = document.getElementById("table2"),
         checkboxes = document.getElementsByName("check-tab1");
+       
 		for(var i = 0; i < checkboxes.length; i++)
 			if(checkboxes[i].checked)
 			{
@@ -215,3 +227,4 @@ document.addEventListener("drop", function(event) {
 </script>
 
 {% endblock %}
+
