@@ -8,9 +8,11 @@ from django.core.files.storage import FileSystemStorage
 urlpatterns = [
 	# Route for template
 	url(r'^$', views.index, name='index'),
+	url(r'^company$', views.company, name='company'),
 	url(r'^creategroup$', views.group_create, name='creategroup'),
 	url(r'^function$', views.function, name='function'),
-	url(r'^import_menu$', views.import_menu, name='import_menu'),
+	url(r'^Varification_balance$', views.Import_Varification_balance, name='Varification_balance'),
+	url(r'^Chart_of_account$', views.Accounting_Chart_of_account, name='Chart_of_account'),
 	url(r'^list_of_file$', views.list_of_file, name='list_of_file'),
 	url(r'^progress$', views.list_of_file, name='progress'),
 	url(r'^grouping$', views.read_data, name='grouping'),

@@ -108,13 +108,16 @@ def index(request):
 def grouping(request):
 	return render(request, 'grouping.html')
 
+def company(request):
+	return render(request, 'company.html')
+
 def creategroup(request):
 	return render(request, 'creategroup.html')
 
 def function(request):
 	return render(request, 'function.html')
 
-def import_menu(request):
+def Import_Varification_balance(request):
 	# list for List Select Account software
 
 	List = [ 'Acomba', 'Sage 50', 'QuickBooks Online']
@@ -132,6 +135,13 @@ def import_menu(request):
 	currency = [ 'Dollar - USD', 'Euro - Euro']
 
 	return render(request, 'import_menu.html', {'ListAccount':List,'dateList':years, 'AllMonths':month, 'currency':currency})
+
+
+def Accounting_Chart_of_account(request):
+	# list for List Select Account software
+	List = [ 'Acomba', 'Sage 50', 'QuickBooks Online']
+
+	return render(request, 'accounting_balance.html', {'ListAccount':List})
 
 # logic for show data 
 def list_of_file(request):

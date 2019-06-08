@@ -1,4 +1,4 @@
-`{% extends 'base.html' %}{% load static %}
+{% extends 'base.html' %}{% load static %}
 {% block content%}
 
 <style>
@@ -72,11 +72,23 @@ function Validate(oForm) {
 </script>
 
 <div class="container">
-	<button type="button" class="btn btn-sm btn-outline-info" style="width: 150px;height: 35px;"><a href="{% url 'index' %}" style="text-decoration: none;">Company</a></button>
+	<button type="button" class="btn btn-sm btn-outline-info" style="width: 150px;height: 35px;"><a href="{% url 'company' %}" style="text-decoration: none;">Company</a></button>
 
 	<form method="POST" action="{% url 'dataupload' %}" id="dataupload" name="dataupload" class="post-form" enctype="multipart/form-data" data-ajax="false" onsubmit="return Validate(this);">
 	{% csrf_token %}
 	<div class="table table-responsive tb">
+		
+		<tr>
+			<td>
+				<input type="text" placeholder="Choose Company " readonly>
+			</td>
+
+			<td>
+				<select name="company" id="company" required>
+				  <option value=""></option>
+			    </select>
+			</td>
+		</tr><br>
 		
 		<tr>
 			<td>
@@ -136,11 +148,6 @@ function Validate(oForm) {
 			      <option value="{{currency}}">{{currency}}</option>
 			      {% endfor %}
 			    </select>
-			</td>
-		</tr><br>
-		<tr>
-			<td colspan="2">
-				<input type="text" placeholder="Enter Company Name " style="width: 515px;height: 30px;" name="company" id="company" required>
 			</td>
 		</tr><br>
 		<tr>

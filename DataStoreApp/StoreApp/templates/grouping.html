@@ -24,57 +24,6 @@
   
 </style>
 
-<script>
-
-document.addEventListener("dragstart", function(event) {
-	console.log("id", event.target.id)
-  event.dataTransfer.setData("Text", event.target.id);
-  
-  document.getElementById("demo").innerHTML = "Started to drag the p element.";
-  
-  event.target.style.opacity = "0.4";
-});
-
-document.addEventListener("drag", function(event) {
-  document.getElementById("demo").style.color = "red";
-});
-
-document.addEventListener("dragend", function(event) {
-  document.getElementById("demo").innerHTML = "Finished dragging the p element.";
-  event.target.style.opacity = "1";
-});
-
-document.addEventListener("dragenter", function(event) {
-  if ( event.target.className == "droptarget" ) {
-    event.target.style.border = "3px dotted red";
-  }
-});
-
-document.addEventListener("dragover", function(event) {
-  event.preventDefault();
-});
-
-document.addEventListener("dragleave", function(event) {
-  if ( event.target.className == "droptarget" ) {
-    event.target.style.border = "";
-  }
-});
-
-document.addEventListener("drop", function(event) {
-  event.preventDefault();
-  if ( event.target.className == "droptarget" ) {
-    document.getElementById("demo").style.color = "";
-    event.target.style.border = "";
-    var data = event.dataTransfer.getData("Text");
-    console.log("event", data)
-    var el = document.getElementById(data)
-    var cloned_el = el.cloneNode(true);
-    var column_data = event.target.appendChild(cloned_el);
-  }
-});
-
-</script>
-
 <h4 class="text-muted" style="text-align: center;">
 	<a href="" style="text-decoration:none;">Linking Account To Group</a>
 </h4>
@@ -119,15 +68,17 @@ document.addEventListener("drop", function(event) {
 		</div>
 		<div class="scroll col-sm-6 box">
 
-			<div>
+			<div  class="droptarget">
  			
 			    {% for item in GroupData %}
 			    <ul>
-			        <li><a href="##" id='row-{{ forloop.counter0}}'><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> {{ item.group_name }}</a></li>			        
+			        <li id='row-{{ forloop.counter0}}'><a href="##" ><i class="fa fa-folder" aria-hidden="true" style="color: #ecda82;"></i> {{ item.group_name }}</a></li>			        
 			    </ul>
 		    	{% endfor %}
+
+		    	<!-- for getting id on click of folder -->
 				<script type="text/javascript">
-					var id ;
+					
 				var reply_click = function()
 				{
 					id = this.id;
@@ -155,6 +106,10 @@ document.addEventListener("drop", function(event) {
 	</div>
 
 <script>
+
+// for getting id (globally) of folder
+
+var id ;
 let OnEvent = (doc) => {
     return {
         on: (event, className, callback) => {
@@ -169,51 +124,103 @@ let OnEvent = (doc) => {
 OnEvent(document).on('click', 'btn', function (e) {
     window.console.log(this, e);
 });
-</script>
 
-<script>
-    // logic for sending data from one table to another table after clicking on checkbox
-    function tab1_To_tab2()
-    {
-        var table1 = document.getElementById("table1"),
-            checkboxes = document.getElementsByName("check-tab1");
-            var table2 = document.createElement("table");
-  			var tblBody = document.createElement("tbody");
-            var elem = id;
-         for(var i = 0; i< table1.rows.length; i++){
-             if(checkboxes[i].checked)
-                {
-                	  var newRow = table2.insertRow(table2.length);
-                	  console.log("row", table1.rows[i])
-					   for (var j = 0; j< table1.rows[i].cells.length; j++) {
-					   var 	 cell = newRow.insertCell(j);
-					   console.log("cell", table1.rows[i].cells[j])
-					   	  cell.innerHTML = table1.rows[i].cells[j].innerHTML;
-					   }  
 
-                    checkboxes[i].checked = false;
-                   
-                }       
-             }  
-			var currentDiv = document.getElementById(elem); 
-			currentDiv.appendChild(table2);
-    }
+// drag and drop feature
+document.addEventListener("dragstart", function(event) {
+	console.log("id", event.target.id)
+  event.dataTransfer.setData("Text", event.target.id);
+  
+  document.getElementById("demo").innerHTML = "Started to drag the p element.";
+  
+  event.target.style.opacity = "0.4";
+});
 
-    // logic for delete row after clicking on checkbox
-    function deleteRow()
-    {
-        var table = document.getElementById("table2"),
+document.addEventListener("drag", function(event) {
+  document.getElementById("demo").style.color = "red";
+});
+
+document.addEventListener("dragend", function(event) {
+  document.getElementById("demo").innerHTML = "Finished dragging the p element.";
+  event.target.style.opacity = "1";
+});
+
+document.addEventListener("dragenter", function(event) {
+  if ( event.target.className == "droptarget" ) {
+    event.target.style.border = "3px dotted red";
+  }
+});
+
+document.addEventListener("dragover", function(event) {
+  event.preventDefault();
+});
+
+document.addEventListener("dragleave", function(event) {
+  if ( event.target.className == "droptarget" ) {
+    event.target.style.border = "";
+  }
+});
+
+document.addEventListener("drop", function(event) {
+  event.preventDefault();
+  if ( event.target.className == "droptarget" ) {
+    document.getElementById("demo").style.color = "";
+    event.target.style.border = "";
+    var data = event.dataTransfer.getData("Text");
+    console.log("event", data)
+    var el = document.getElementById(data)
+    var cloned_el = el.cloneNode(true);
+    console.log("drop id", id)
+    console.log("elem",event.target )
+    var selected_elem = document.getElementById(id).appendChild(cloned_el);
+  }
+});
+
+
+// logic for sending data from one table to another table after clicking on checkbox
+function tab1_To_tab2()
+{
+    var table1 = document.getElementById("table1"),
         checkboxes = document.getElementsByName("check-tab1");
-       
-		for(var i = 0; i < checkboxes.length; i++)
-			if(checkboxes[i].checked)
-			{
-			    var table = document.getElementById ("table2");
-			    if (table.rows.length > 0) {
-			        table.deleteRow (0);
-			    }
-			}
-    }
+        var table2 = document.createElement("table");
+			var tblBody = document.createElement("tbody");
+        var elem = id;
+ 	for(var i = 0; i< table1.rows.length; i++){
+     if(checkboxes[i].checked)
+        {
+        	  var newRow = table2.insertRow(table2.length);
+        	  console.log("row", table1.rows[i])
+			   for (var j = 0; j< table1.rows[i].cells.length; j++) {
+			   var 	 cell = newRow.insertCell(j);
+			   console.log("cell", table1.rows[i].cells[j])
+			   	  cell.innerHTML = table1.rows[i].cells[j].innerHTML;
+			   }  
+
+            checkboxes[i].checked = false;
+           
+        }       
+     }  
+	var currentDiv = document.getElementById(elem); 
+	currentDiv.appendChild(table2);
+}
+
+
+// logic for delete row after clicking on checkbox
+function deleteRow()
+{
+    var table = document.getElementById("table2"),
+    checkboxes = document.getElementsByName("check-tab1");
+   
+	for(var i = 0; i < checkboxes.length; i++)
+		if(checkboxes[i].checked)
+		{
+		    var table = document.getElementById ("table2");
+		    if (table.rows.length > 0) {
+		        table.deleteRow (0);
+		    }
+		}
+}
+
 
 </script>
 

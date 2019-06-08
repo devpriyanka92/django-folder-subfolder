@@ -17,11 +17,12 @@ class Company(models.Model):
 
 # create chart_of_account
 class Chart_Of_Account(models.Model):
-    field_id = models.BigIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
-    field_account = models.CharField(max_length=100)
-    field_account_libaccount = models.CharField(max_length=100)
+    no_compte = models.BigIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    account = models.CharField(max_length=100)
     field_type = models.CharField(max_length=100)
+    detailed_type = models.CharField(max_length=100)
     field_subtype = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
 
 # create Group
 class Group(models.Model):
@@ -39,7 +40,7 @@ class SubGroup(models.Model):
 class Varification_balance(models.Model):
     field_id = models.BigIntegerField()
     field_account = models.CharField(max_length=200)
-    company = models.CharField(null=True,max_length=200)
+    company = models.CharField(max_length=200, default="")
     debit = models.IntegerField(default=170)
     credit = models.IntegerField(default=170)
     fiscal_year = models.IntegerField(default=170, null=True)
